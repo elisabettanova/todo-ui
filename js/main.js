@@ -7,11 +7,11 @@ window.addEventListener('load', function (event) {
 
   // View Functions
 
-  function showOverlay(){
+  function showOverlay() {
     loadingOverlay.classList.remove('hide');
   }
 
-  function hideOverlay(){
+  function hideOverlay() {
     loadingOverlay.classList.add('hide');
   }
 
@@ -43,8 +43,8 @@ window.addEventListener('load', function (event) {
     // READ WHAT I DO HERE
     /* Using content editable and blur events I am sending update data to server */
     taskTextSpan.setAttribute('contenteditable', "true");
-    taskTextSpan.addEventListener('blur', function (event){
-      if(event.target.innerHTML !== taskObject.title){
+    taskTextSpan.addEventListener('blur', function (event) {
+      if (event.target.innerHTML !== taskObject.title) {
         updateTask(taskObject.id, event.target.innerHTML, taskObject.status)
       }
     })
@@ -60,7 +60,7 @@ window.addEventListener('load', function (event) {
     taskDeleteLink.setAttribute('href', '#')
     taskDeleteLink.setAttribute('class', 'task-delete')
     taskDeleteLink.innerHTML = "Delete";
-    taskDeleteLink.addEventListener('click', function(event){
+    taskDeleteLink.addEventListener('click', function (event) {
       deleteTask(taskObject.id);
     })
 
@@ -72,7 +72,6 @@ window.addEventListener('load', function (event) {
     doneCheckbox.setAttribute('type', 'checkbox')
     doneCheckbox.setAttribute('class', 'done-checkbox')
     doneCheckbox.checked = taskObject.status;
-
 
 
     if (taskObject.status) {
@@ -198,5 +197,17 @@ window.addEventListener('load', function (event) {
   })
 
 
+  showOverlay();
+
   render();
+
+  /*
+  setTimeout(function () {
+    showOverlay();
+  }, 1000)
+
+  setTimeout(function () {
+    hideOverlay();
+  }, 4000)
+  */
 })
