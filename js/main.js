@@ -3,8 +3,17 @@ window.addEventListener('load', function (event) {
   let taskInput = document.getElementById('taskInput');
   let taskButton = document.getElementById('taskButton');
   let tasksListDiv = document.getElementById('tasksList');
+  let loadingOverlay = document.getElementById('loadingOverlay');
 
   // View Functions
+
+  function showOverlay(){
+    loadingOverlay.classList.remove('hide');
+  }
+
+  function hideOverlay(){
+    loadingOverlay.classList.add('hide');
+  }
 
   function taskObjectToTaskView(taskObject) {
     /*
@@ -104,6 +113,7 @@ window.addEventListener('load', function (event) {
   // Server Functions
 
   function render() {
+    showOverlay()
     fetch('http://localhost:3000/tasks/').then(function (response) {
       return response.json();
     }).then(function (data) {
@@ -111,6 +121,7 @@ window.addEventListener('load', function (event) {
       let newTasksList = tasksArrayToTaskList(data);
       tasksListDiv.innerHTML = "";
       tasksListDiv.append(newTasksList);
+      hideOverlay();
     })
   }
 
@@ -119,7 +130,7 @@ window.addEventListener('load', function (event) {
       title: taskString,
       status: status
     }
-
+    showOverlay()
     fetch('http://localhost:3000/tasks/' + id, {
       method: 'PUT',
       headers: {
@@ -144,7 +155,7 @@ window.addEventListener('load', function (event) {
       "status": false
     }
     console.log(JSON.stringify(newTaskObject))
-
+    showOverlay()
     fetch('http://localhost:3000/tasks/', {
       method: 'POST',
       headers: {
@@ -163,6 +174,7 @@ window.addEventListener('load', function (event) {
   }
 
   function deleteTask(id) {
+    showOverlay()
     fetch('http://localhost:3000/tasks/' + id, {
       method: 'DELETE'
     }).then(function (response) {
